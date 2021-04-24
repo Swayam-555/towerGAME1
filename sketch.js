@@ -4,9 +4,9 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 var engine, world;
-var holder,ball,ground;
+var holder,polygon,ground;
 var stand1,stand2;
-var ball;
+var polygon;
 var slingShot;
 var polygon_img;
 function preload(){
@@ -19,11 +19,10 @@ function setup() {
   Engine.run(engine);
   ground = new Ground();
   stand1 = new Stand(390,300,250,10);
-  stand2 = new Stand(690,200,230,10);
+  stand2 = new Stand(700,200,200,10);
  
   //level one
   block1 = new Block(300,275,30,40);
-  console.log(block1);
   block2 = new Block(330,275,30,40);
   block3 = new Block(360,275,30,40);
   block4 = new Block(390,275,30,40);
@@ -43,38 +42,37 @@ function setup() {
   //top
   block16 = new Block(390,155,30,40);
 
+  //set 2 for second stand
   //level one
-  block17 = new Block(600,175,30,40);
-  console.log(block1);
-  block18 = new Block(630,175,30,40);
-  block19 = new Block(660,175,30,40);
-  block20 = new Block(690,175,30,40);
-  block21 = new Block(720,175,30,40);
-  block22 = new Block(750,175,30,40);
-  block23 = new Block(780,175,30,40);
+  blocks1 = new Block(640,175,30,40);
+  blocks2 = new Block(670,175,30,40);
+  blocks3 = new Block(700,175,30,40);
+  blocks4 = new Block(730,175,30,40);
+  blocks5 = new Block(760,175,30,40);
   //level two
-  block24 = new Block(630,135,30,40);
-  block25 = new Block(660,135,30,40);
-  block26 = new Block(690,135,30,40);
-  block27 = new Block(720,135,30,40);
-  block28 = new Block(750,135,30,40);
-  //level three
-  block29 = new Block(660,95,30,40);
-  block30 = new Block(690,95,30,40);
-  block31 = new Block(720,95,30,40);
+  blocks6 = new Block(670,135,30,40);
+  blocks7 = new Block(700,135,30,40);
+  blocks8 = new Block(730,135,30,40);
   //top
-  block32 = new Block(690,55,30,40);
+  blocks9 = new Block(700,95,30,40);
 
+  //polygon holder with slings
+  polygon = Bodies.circle(50,200,20);
+  World.add(world,polygon);
   
+  slingShot = new Slingshot(this.polygon,{x:100,y:200});
 
 }
 function draw() {
   background(56,44,44); 
  
+  //Engine.update(engine);
+  
   textSize(20);
   fill("lightyellow");
-  
-
+  text("Drag the polygon to destroy the blocks",300,30);
+  textSize(10);
+  text("Press Space to get a second Chance to Play!!",650 ,350);
   ground.display();
   stand1.display();
   stand2.display();
@@ -100,31 +98,31 @@ function draw() {
   block15.display();
   fill("grey");
   block16.display();
-
-
-
-  strokeWeight(2);
-  stroke(15);
-  fill("blue");
-  block17.display();
-  block18.display();
-  block19.display();
-  block20.display();
-  block21.display();
-  block22.display();
-  block23.display();
-  fill("red");
-  block24.display();
-  block25.display();
-  block26.display();
-  block27.display();
-  block28.display();
+  fill("skyblue");
+  blocks1.display();
+  blocks2.display();
+  blocks3.display();
+  blocks4.display();
+  blocks5.display();
   fill("turquoise");
-  block29.display();
-  block30.display();
-  block31.display();
-  fill("magenta");
-  block32.display();
- 
+  blocks6.display();
+  blocks7.display();
+  blocks8.display();
+  fill("pink")
+  blocks9.display();
+  fill("gold");
+  imageMode(CENTER)
+  image(polygon_img ,polygon.position.x,polygon.position.y,40,40);
 
+  slingShot.display();
+  
+}
+function mouseDragged(){
+  Matter.Body.setPosition(this.polygon,{x:mouseX,y:mouseY});
+}
+function mouseReleased(){
+  slingShot.fly();
+}
+function keyPressed(){
+//write code for extra chance of the player
 }
